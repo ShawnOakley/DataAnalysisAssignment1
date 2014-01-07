@@ -3,7 +3,15 @@ import pandas as pd
 
 def key_float_to_string(df):
 	df.keys = [int(key) for key in df.keys() ]
+	df.columns = [int(key) for key in df.columns ]
 	return df
+
+def to_number(s):
+ 	try:
+ 		s1 = float(s)
+ 		return s1
+ 	except ValueError:
+ 		return 0
 
 co2_emissions = pd.ExcelFile('CO2_Emissions_from_the_Consumption_of_Petroleum_(Million_Metric_Tons).xls')
 co2_emissions = key_float_to_string(co2_emissions.parse('Data3'))
@@ -35,6 +43,20 @@ total_consumption = key_float_to_string(total_consumption.parse('Data3'))
 total_petroleum_stocks = pd.ExcelFile('Total_Petroleum_Stocks,_End_of_Period_(Millions_Barrels).xls')
 total_petroleum_stocks = key_float_to_string(total_petroleum_stocks.parse('Data3'))
 
-comp = pd.merge(total_imports, total_exports)
-print total_exports.keys
+# comp = pd.merge(total_imports, total_exports, right_index=True, left_index=True)
+comp = pd.concat([total_imports, total_exports])
+# total_imports = total_imports.apply(lambda f : to_number(f[0]))
+# print total_imports.index
+# print total_imports.columns
+# print total_imports.keys
 
+# print comp.index
+
+# Note use of ix function to select index
+print comp.ix['Mexico'].to_string()
+# print comp.keys
+# print comp.applymap(lambda x: x[0]-x[1])
+# print comp.values['Mexico']
+# print total_exports.index
+# print total_exports.columns
+# print total_exports.keys
