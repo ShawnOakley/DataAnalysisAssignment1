@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def key_float_to_string(df):
@@ -53,10 +54,13 @@ comp = pd.concat([total_imports, total_exports])
 # print comp.index
 
 # Note use of ix function to select index
-print comp.ix['Mexico'].to_string()
+US = comp.ix['United States'].astype(float)
+print comp.ix['China'].to_string()
 # print comp.keys
 # print comp.applymap(lambda x: x[0]-x[1])
 # print comp.values['Mexico']
 # print total_exports.index
 # print total_exports.columns
 # print total_exports.keys
+
+US.plot()
