@@ -7,13 +7,6 @@ def key_float_to_string(df):
 	df.columns = [int(key) for key in df.columns ]
 	return df
 
-def to_number(s):
- 	try:
- 		s1 = float(s)
- 		return s1
- 	except ValueError:
- 		return 0
-
 co2_emissions = pd.ExcelFile('CO2_Emissions_from_the_Consumption_of_Petroleum_(Million_Metric_Tons).xls')
 co2_emissions = key_float_to_string(co2_emissions.parse('Data3'))
 
@@ -78,3 +71,16 @@ plt.show()
 # 	US.plot(xticks=US.index, title ="Imports/Exports in US")
 
 # plt.show
+
+
+
+
+# QUESTION 2: A number of pie charts.  Subplots of a number of different years.
+comp = pd.concat([total_consumption])
+
+
+# QUESTION 3:
+# Try to create a Hinton diagram, depicting consumption, positive or negative
+# and degrees
+# http://matplotlib.org/examples/specialty_plots/hinton_demo.html
+
