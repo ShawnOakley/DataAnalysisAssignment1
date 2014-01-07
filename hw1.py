@@ -1,3 +1,5 @@
+# Resource: http://wiki.scipy.org/Cookbook/Matplotlib
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -99,8 +101,11 @@ China_plot.legend(leg, loc='best')
 
 
 
-# QUESTION 2: A number of pie charts.  Subplots of a number of different years.
-comp = pd.concat([total_consumption])
+# QUESTION 2: Bar graph of relative levels of consumption per emission 
+# Measures efficiency of use
+comp = pd.concat([total_consumption, co2_emissions])
+
+
 
 
 # QUESTION 3:
@@ -111,4 +116,5 @@ comp = pd.concat([total_consumption])
 # hinton(US)
 
 if __name__ == '__main__':
-	plt.show()
+	# plt.show()
+	print comp[1990]
