@@ -76,21 +76,21 @@ df_cic = pd.DataFrame.from_dict(country_import_comp)
 # Need to call astype to convert string numbers to floats for later graphing
 # https://stackoverflow.com/questions/16301546/swapping-axes-in-pandas
 # Flips axes to make it more readable
-US = comp.ix['United States'].astype(float).T
-China = comp.ix['China'].astype(float).T
+US = df_cic.ix['United States'].astype(float).T
+China = df_cic.ix['China'].astype(float).T
 
-leg=['Imports', 'Exports']
+leg=['China', 'United States']
 
-US_plot = US.plot(xticks=US.index, title ="Imports/Exports in US")
+US_plot = US.plot(xticks=US.index, title ="Imports/Exports in Thousands Barrels per Day")
 # legend in Pandas
 # https://stackoverflow.com/questions/13886019/reconstruction-figure-legend-in-pandas
 US_plot.legend(leg, loc='best')
 plt.xlabel("Year")
-plt.ylabel('Thousands of Barrels Per Day')
+plt.ylabel('Difference between Imports and Exports (Thousand Barrels/Day)')
 # Setting tick intervals
 # https://stackoverflow.com/questions/10839719/how-to-set-step-on-axis-x-in-my-figure-in-matplotlib-python-2-6-6
 
-China_plot = China.plot(xticks=China.index, title ="Imports/Exports in China")
+China_plot = China.plot(xticks=China.index, title ="Imports/Exports in Thousands Barrels per Day")
 China_plot.legend(leg, loc='best')
 
 
@@ -123,7 +123,6 @@ df_cec = pd.DataFrame.from_dict(country_effic_comp)
 # hinton(US)
 
 if __name__ == '__main__':
-	# plt.show()
+	plt.show()
 	
-	print df_cic[2010]
 # How do you map to a shared row/column, other than the above, which takes too long
