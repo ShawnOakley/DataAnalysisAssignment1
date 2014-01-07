@@ -51,27 +51,30 @@ comp = pd.concat([total_imports, total_exports])
 
 # Note use of ix function to select index
 # Need to call astype to convert string numbers to floats for later graphing
-US = comp.ix['United States'].astype(float).T
-China = comp.ix['China'].astype(float).T
-# print comp.keys
-# print comp.applymap(lambda x: x[0]-x[1])
-# print comp.values['Mexico']
-# print total_exports.index
-# print total_exports.columns
-# print total_exports.keys
-
 # https://stackoverflow.com/questions/16301546/swapping-axes-in-pandas
 # Flips axes to make it more readable
+US = comp.ix['United States'].astype(float).T
+China = comp.ix['China'].astype(float).T
 
+leg=['Imports', 'Exports']
 
-US.plot()
-
+US_plot = US.plot(xticks=US.index, title ="Imports/Exports in US")
+# legend in Pandas
+# https://stackoverflow.com/questions/13886019/reconstruction-figure-legend-in-pandas
+US_plot.legend(leg, loc='best')
+plt.xlabel("Year")
+plt.ylabel('Thousands of Barrels Per Day')
 # Setting tick intervals
 # https://stackoverflow.com/questions/10839719/how-to-set-step-on-axis-x-in-my-figure-in-matplotlib-python-2-6-6
-plt.xticks(US.index)
 
-
-China.plot()
-plt.xticks(China.index)
+China_plot = China.plot(xticks=China.index, title ="Imports/Exports in China")
+China_plot.legend(leg, loc='best')
 
 plt.show()
+
+
+# with pd.plot_params.use('x_compat', True):
+# 	China.plot(xticks=China.index, title ="Imports/Exports in China")
+# 	US.plot(xticks=US.index, title ="Imports/Exports in US")
+
+# plt.show
