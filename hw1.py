@@ -68,6 +68,10 @@ total_petroleum_stocks = key_float_to_string(total_petroleum_stocks.parse('Data3
 # comp = pd.merge(total_imports, total_exports, right_index=True, left_index=True)
 comp = pd.concat([total_imports, total_exports])
 
+country_import_comp = {year: {country: comp[year][country][0] - comp[year][country][1] for country in comp[year].keys() if isinstance(comp[year][country][0], float) and isinstance(comp[year][country][1], float)} for year in comp}
+
+df_cic = pd.DataFrame.from_dict(country_import_comp)
+
 # Note use of ix function to select index
 # Need to call astype to convert string numbers to floats for later graphing
 # https://stackoverflow.com/questions/16301546/swapping-axes-in-pandas
@@ -98,15 +102,18 @@ China_plot.legend(leg, loc='best')
 
 # plt.show
 
-
-
-
 # QUESTION 2: Bar graph of relative levels of consumption per emission 
 # Measures efficiency of use
 comp = pd.concat([total_consumption, co2_emissions])
 
+# Uses nested dict comprehension to create map of ratios for the years --> countries
 
+country_effic_comp = {year: {country: comp[year][country][0]/comp[year][country][1] for country in comp[year].keys() if isinstance(comp[year][country][0], float) and isinstance(comp[year][country][1], float)} for year in comp}
 
+# Creates dataframe from nested dic
+# https://stackoverflow.com/questions/13575090/construct-pandas-dataframe-from-items-in-nested-dictionary
+
+df_cec = pd.DataFrame.from_dict(country_effic_comp)
 
 # QUESTION 3:
 # Try to create a Hinton diagram, depicting consumption, positive or negative
@@ -117,4 +124,6 @@ comp = pd.concat([total_consumption, co2_emissions])
 
 if __name__ == '__main__':
 	# plt.show()
-	print comp[1990]
+	
+	print df_cic[2010]
+# How do you map to a shared row/column, other than the above, which takes too long
