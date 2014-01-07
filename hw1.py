@@ -4,30 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-def hinton(dataframe, max_weight=None, ax=None):
-    """Draw Hinton diagram for visualizing a weight matrix."""
-    matrix = dataframe.as_matrix()
-
-    ax = ax if ax is not None else plt.gca()
-
-    if not max_weight:
-        max_weight = 2**np.ceil(np.log(np.abs(matrix).max())/np.log(2))
-
-    ax.patch.set_facecolor('gray')
-    ax.set_aspect('equal', 'box')
-    ax.xaxis.set_major_locator(plt.NullLocator())
-    ax.yaxis.set_major_locator(plt.NullLocator())
-
-    for (x,y),w in np.ndenumerate(matrix):
-        color = 'white' if w > 0 else 'black'
-        size = np.sqrt(np.abs(w))
-        rect = plt.Rectangle([x - size / 1000, y - size / 1000], size, size,
-                             facecolor=color, edgecolor=color)
-        ax.add_patch(rect)
-
-    ax.autoscale_view()
-
 def key_float_to_string(df):
 	df.keys = [int(key) for key in df.keys() ]
 	df.columns = [int(key) for key in df.columns ]
@@ -76,25 +52,22 @@ df_cic = pd.DataFrame.from_dict(country_import_comp)
 # Need to call astype to convert string numbers to floats for later graphing
 # https://stackoverflow.com/questions/16301546/swapping-axes-in-pandas
 # Flips axes to make it more readable
-US = df_cic.ix['United States'].astype(float).T
-China = df_cic.ix['China'].astype(float).T
+# US = df_cic.ix['United States'].astype(float).T
+# China = df_cic.ix['China'].astype(float).T
 
-leg=['China', 'United States']
+# leg=['China', 'United States']
 
-US_plot = US.plot(xticks=US.index, title ="Imports/Exports in Thousands Barrels per Day")
-# legend in Pandas
-# https://stackoverflow.com/questions/13886019/reconstruction-figure-legend-in-pandas
-US_plot.legend(leg, loc='best')
-plt.xlabel("Year")
-plt.ylabel('Difference between Imports and Exports (Thousand Barrels/Day)')
-# Setting tick intervals
-# https://stackoverflow.com/questions/10839719/how-to-set-step-on-axis-x-in-my-figure-in-matplotlib-python-2-6-6
+# US_plot = US.plot(xticks=US.index, title ="Imports/Exports in Thousands Barrels per Day")
+# # legend in Pandas
+# # https://stackoverflow.com/questions/13886019/reconstruction-figure-legend-in-pandas
+# US_plot.legend(leg, loc='best')
+# plt.xlabel("Year")
+# plt.ylabel('Difference between Imports and Exports (Thousand Barrels/Day)')
+# # Setting tick intervals
+# # https://stackoverflow.com/questions/10839719/how-to-set-step-on-axis-x-in-my-figure-in-matplotlib-python-2-6-6
 
-China_plot = China.plot(xticks=China.index, title ="Imports/Exports in Thousands Barrels per Day")
-China_plot.legend(leg, loc='best')
-
-
-
+# China_plot = China.plot(xticks=China.index, title ="Imports/Exports in Thousands Barrels per Day")
+# China_plot.legend(leg, loc='best')
 
 # with pd.plot_params.use('x_compat', True):
 # 	China.plot(xticks=China.index, title ="Imports/Exports in China")
@@ -115,10 +88,50 @@ country_effic_comp = {year: {country: comp[year][country][0]/comp[year][country]
 
 df_cec = pd.DataFrame.from_dict(country_effic_comp)
 
+US = df_cec.ix['United States'].astype(float).T
+China = df_cec.ix['China'].astype(float).T
+
+leg=['China', 'United States']
+
+US_plot = US.plot(xticks=US.index, title ="Energy efficiency as measured in Total Cons./CO2 Emissions")
+# legend in Pandas
+# https://stackoverflow.com/questions/13886019/reconstruction-figure-legend-in-pandas
+US_plot.legend(leg, loc='best')
+plt.xlabel("Year")
+plt.ylabel('Total Consumption/CO2 Emissions')
+# Setting tick intervals
+# https://stackoverflow.com/questions/10839719/how-to-set-step-on-axis-x-in-my-figure-in-matplotlib-python-2-6-6
+
+China_plot = China.plot(xticks=China.index, title ="Energy efficiency as measured in Total Cons./CO2 Emissions")
+China_plot.legend(leg, loc='best')
+
 # QUESTION 3:
 # Try to create a Hinton diagram, depicting consumption, positive or negative
 # and degrees
 # http://matplotlib.org/examples/specialty_plots/hinton_demo.html
+
+def hinton(dataframe, max_weight=None, ax=None):
+    """Draw Hinton diagram for visualizing a weight matrix."""
+    matrix = dataframe.as_matrix()
+
+    ax = ax if ax is not None else plt.gca()
+
+    if not max_weight:
+        max_weight = 2**np.ceil(np.log(np.abs(matrix).max())/np.log(2))
+
+    ax.patch.set_facecolor('gray')
+    ax.set_aspect('equal', 'box')
+    ax.xaxis.set_major_locator(plt.NullLocator())
+    ax.yaxis.set_major_locator(plt.NullLocator())
+
+    for (x,y),w in np.ndenumerate(matrix):
+        color = 'white' if w > 0 else 'black'
+        size = np.sqrt(np.abs(w))
+        rect = plt.Rectangle([x - size / 1000, y - size / 1000], size, size,
+                             facecolor=color, edgecolor=color)
+        ax.add_patch(rect)
+
+    ax.autoscale_view()
 
 # hinton(US)
 
