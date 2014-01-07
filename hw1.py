@@ -1,6 +1,30 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
+
+def hinton(dataframe, max_weight=None, ax=None):
+    """Draw Hinton diagram for visualizing a weight matrix."""
+    matrix = dataframe.as_matrix()
+
+    ax = ax if ax is not None else plt.gca()
+
+    if not max_weight:
+        max_weight = 2**np.ceil(np.log(np.abs(matrix).max())/np.log(2))
+
+    ax.patch.set_facecolor('gray')
+    ax.set_aspect('equal', 'box')
+    ax.xaxis.set_major_locator(plt.NullLocator())
+    ax.yaxis.set_major_locator(plt.NullLocator())
+
+    for (x,y),w in np.ndenumerate(matrix):
+        color = 'white' if w > 0 else 'black'
+        size = np.sqrt(np.abs(w))
+        rect = plt.Rectangle([x - size / 1000, y - size / 1000], size, size,
+                             facecolor=color, edgecolor=color)
+        ax.add_patch(rect)
+
+    ax.autoscale_view()
 
 def key_float_to_string(df):
 	df.keys = [int(key) for key in df.keys() ]
@@ -63,7 +87,7 @@ plt.ylabel('Thousands of Barrels Per Day')
 China_plot = China.plot(xticks=China.index, title ="Imports/Exports in China")
 China_plot.legend(leg, loc='best')
 
-plt.show()
+
 
 
 # with pd.plot_params.use('x_compat', True):
@@ -84,3 +108,7 @@ comp = pd.concat([total_consumption])
 # and degrees
 # http://matplotlib.org/examples/specialty_plots/hinton_demo.html
 
+# hinton(US)
+
+if __name__ == '__main__':
+	plt.show()
