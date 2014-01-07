@@ -44,18 +44,15 @@ total_consumption = key_float_to_string(total_consumption.parse('Data3'))
 total_petroleum_stocks = pd.ExcelFile('Total_Petroleum_Stocks,_End_of_Period_(Millions_Barrels).xls')
 total_petroleum_stocks = key_float_to_string(total_petroleum_stocks.parse('Data3'))
 
+
+# QUESTION 1: How do China and the U.S. compare in terms of energy independence?
 # comp = pd.merge(total_imports, total_exports, right_index=True, left_index=True)
 comp = pd.concat([total_imports, total_exports])
-# total_imports = total_imports.apply(lambda f : to_number(f[0]))
-# print total_imports.index
-# print total_imports.columns
-# print total_imports.keys
-
-# print comp.index
 
 # Note use of ix function to select index
-US = comp.ix['United States'].astype(float)
-print comp.ix['China'].to_string()
+# Need to call astype to convert string numbers to floats for later graphing
+US = comp.ix['United States'].astype(float).T
+China = comp.ix['China'].astype(float).T
 # print comp.keys
 # print comp.applymap(lambda x: x[0]-x[1])
 # print comp.values['Mexico']
@@ -63,4 +60,18 @@ print comp.ix['China'].to_string()
 # print total_exports.columns
 # print total_exports.keys
 
+# https://stackoverflow.com/questions/16301546/swapping-axes-in-pandas
+# Flips axes to make it more readable
+
+
 US.plot()
+
+# Setting tick intervals
+# https://stackoverflow.com/questions/10839719/how-to-set-step-on-axis-x-in-my-figure-in-matplotlib-python-2-6-6
+plt.xticks(US.index)
+
+
+China.plot()
+plt.xticks(China.index)
+
+plt.show()
