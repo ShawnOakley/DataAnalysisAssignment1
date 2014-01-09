@@ -32,7 +32,7 @@ plt.ylabel('Total Consumption/CO2 Emissions')
 # Setting tick intervals
 # https://stackoverflow.com/questions/10839719/how-to-set-step-on-axis-x-in-my-figure-in-matplotlib-python-2-6-6
 
-China_plot = China.plot(xticks=US.index, title ="Oil consumption as measured in terms of CO2 emissions")
+China_plot = China.plot(xticks=US.index[0::5], title ="Oil consumption as measured in terms of CO2 emissions")
 China_plot.legend(leg, loc='best')
 
 plt.show()
