@@ -34,8 +34,8 @@ plt.ylabel('Difference between Imports and Exports (Thousand Barrels/Day)')
 China_plot = China.plot(xticks=China.index, title ="Imports/Exports in Thousands Barrels per Day")
 China_plot.legend(leg, loc='best')
 
-with pd.plot_params.use('x_compat', True):
-	China.plot(xticks=China.index, title ="Imports/Exports in China")
-	US.plot(xticks=US.index, title ="Imports/Exports in US")
+# with pd.plot_params.use('x_compat', True):
+# 	China.plot(xticks=China.index, title ="Imports/Exports in China")
+# 	US.plot(xticks=US.index, title ="Imports/Exports in US")
 
-plt.show
+plt.show()
